@@ -1,20 +1,34 @@
-export default async function loginUser(username: string, password: string) {
-  const baseUrl = process.env.SERVER_BASE_URL
-  const headersOptions = { 'Content-Type': 'application/json' }
+import decode from 'jwt-decode'
 
-  const user = await fetch(`http://localhost:4001/api/user/login`, {
-    method: 'POST',
-    headers: headersOptions,
-    body: JSON.stringify({ username: username, password: password }),
-  })
-    .then((user) => user.json())
-    .catch((err) => err)
+class AuthHandler {
+  // getProfile() {
+  //   return decode(this.getToken())
+  // }
 
-  if (!user) {
-    throw new Error('Could not login user')
+  loggedIn() {
+    const token = this.getToken()
+    return token ? true : false
   }
 
-  localStorage.setItem('user', JSON.stringify(user))
+  getToken() {
+    return localStorage.getItem('auth_token')
+  }
 
-  return user
+  getUsername() {
+    const localStorageUsername = localStorage.getItem('auth_token') || ''
+    const username = JSON.parse(localStorageUsername)
+    return username
+  }
+
+  login(user: any) {
+    localStorage.setItem('auth_token', user)
+    window.location.assign('/diary')
+  }
+
+  logout() {
+    localStorage.removeItem('auth_token')
+    window.location.assign('/')
+  }
 }
+
+export default new AuthHandler()
