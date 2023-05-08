@@ -13,6 +13,7 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
+  console.log({ loggedIn: AuthHandler.loggedIn() })
   return (
     <>
       {!AuthHandler.loggedIn() ? (

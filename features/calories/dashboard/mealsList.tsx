@@ -11,32 +11,32 @@ function classNames(...classes: any) {
 export default function MealsList() {
   return (
     <ul role='list' className='divide-y divide-gray-100'>
-      {meals.map((project) => (
+      {meals.map((meal) => (
         <li
-          key={project.id}
+          key={meal.id}
           className='flex items-center justify-between gap-x-6 py-5'
         >
           <div className='min-w-0'>
             <div className='flex items-start gap-x-3'>
               <p className='text-sm font-semibold leading-6 text-gray-900'>
-                {project.name}
+                {meal.name}
               </p>
               <p
                 className={classNames(
-                  statuses[project.status],
+                  statuses[meal.status],
                   'rounded-md whitespace-nowrap mt-0.5 px-2 py-0.5 text-xs font-medium ring-1 ring-inset'
                 )}
               >
-                {project.status}
+                {meal.status}
               </p>
             </div>
           </div>
           <div className='flex flex-none items-center gap-x-4'>
             <Link
-              href={project.href}
+              href={meal.href}
               className='hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block'
             >
-              Add Food<span className='sr-only'>, {project.name}</span>
+              Add Food<span className='sr-only'>, {meal.name}</span>
             </Link>
             <Menu as='div' className='relative flex-none'>
               <Menu.Button className='-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900'>
@@ -62,7 +62,7 @@ export default function MealsList() {
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
                         )}
                       >
-                        Edit<span className='sr-only'>, {project.name}</span>
+                        Edit<span className='sr-only'>, {meal.name}</span>
                       </a>
                     )}
                   </Menu.Item>
@@ -75,7 +75,7 @@ export default function MealsList() {
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
                         )}
                       >
-                        Move<span className='sr-only'>, {project.name}</span>
+                        Move<span className='sr-only'>, {meal.name}</span>
                       </a>
                     )}
                   </Menu.Item>
@@ -88,7 +88,7 @@ export default function MealsList() {
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
                         )}
                       >
-                        Delete<span className='sr-only'>, {project.name}</span>
+                        Delete<span className='sr-only'>, {meal.name}</span>
                       </a>
                     )}
                   </Menu.Item>
