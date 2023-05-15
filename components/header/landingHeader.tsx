@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import food from '../../public/food.jpg'
+import food from '../../public/images/food.jpg'
 
 export default function Header() {
   return (

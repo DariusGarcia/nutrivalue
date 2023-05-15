@@ -7,6 +7,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import MacroStats from './dashboard/macroStats'
 import MealsList from './dashboard/mealsList'
+
 import AuthHandler from '../../lib/userAuth'
 
 function classNames(...classes) {
@@ -225,6 +226,7 @@ const Dashboard = () => {
                     <div className='py-2 md:p-4 h-full'>
                       <MacroStats />
                       <MealsList />
+                      <MacroStats />
                     </div>
                   </div>
                 </section>
