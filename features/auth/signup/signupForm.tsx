@@ -1,11 +1,12 @@
+'use client'
 import React, { useState } from 'react'
 import AuthHandler from '@/lib/userAuth'
 import { redirect } from 'next/navigation'
 
 // redirect if user is already logged in
-AuthHandler.loggedIn() && redirect('/diary')
+// AuthHandler.loggedIn() && redirect('/diary')
 
-export default function SignupForm() {
+const SignupForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -133,3 +134,5 @@ export default function SignupForm() {
     </>
   )
 }
+
+export default SignupForm

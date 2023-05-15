@@ -1,4 +1,5 @@
 // @ts-nocheck
+'use client'
 import Link from 'next/link'
 import { useLayoutEffect, useRef, useState } from 'react'
 import capitalize from '@/utils/capitalize'
@@ -12,7 +13,7 @@ function filterCategories(data: any[], type: string) {
   return filteredData
 }
 
-export default function MealType({ userMeals, mealType }: any) {
+const MealType = ({ userMeals, mealType }: any) => {
   const checkbox = useRef(null)
   const [checked, setChecked] = useState(false)
   const [indeterminate, setIndeterminate] = useState(false)
@@ -253,3 +254,5 @@ export default function MealType({ userMeals, mealType }: any) {
     </>
   )
 }
+
+export default MealType
