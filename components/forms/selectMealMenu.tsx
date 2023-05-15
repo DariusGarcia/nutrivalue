@@ -5,37 +5,27 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const publishingOptions = [
-  {
-    title: 'Breakfast',
-    description: 'This job posting can be viewed by anyone who has the link.',
-    current: true,
-  },
-  {
-    title: 'Lunch',
-    description: 'This job posting will no longer be publicly accessible.',
-    current: false,
-  },
-  {
-    title: 'Dinner',
-    description: 'This job posting will no longer be publicly accessible.',
-    current: false,
-  },
-  {
-    title: 'Snack',
-    description: 'This job posting will no longer be publicly accessible.',
-    current: false,
-  },
+  'Select the type of meal',
+  'Breakfast',
+  'Lunch',
+  'Dinner',
+  'Snack',
+  ,
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectMealMenu() {
+export default function SelectMealMenu({ onChangeSelected }) {
   const [selected, setSelected] = useState(publishingOptions[0])
 
+  function handleSelectedChange(value) {
+    setSelected(value)
+    onChangeSelected(value)
+  }
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={handleSelectedChange}>
       {({ open }) => (
         <>
           <Listbox.Label className='sr-only'>
@@ -45,7 +35,7 @@ export default function SelectMealMenu() {
             <div className='inline-flex divide-x divide-orange-700 rounded-md shadow-sm'>
               <div className='inline-flex items-center gap-x-1.5 rounded-l-md bg-orange-600 px-3 py-2 text-white shadow-sm'>
                 <CheckIcon className='-ml-0.5 h-5 w-5' aria-hidden='true' />
-                <p className='text-sm font-semibold'>{selected.title}</p>
+                <p className='text-sm font-semibold'>{selected}</p>
               </div>
               <Listbox.Button className='inline-flex items-center rounded-l-none rounded-r-md bg-orange-600 p-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 focus:ring-offset-gray-50'>
                 <span className='sr-only'>Change published status</span>
@@ -83,7 +73,7 @@ export default function SelectMealMenu() {
                               selected ? 'font-semibold' : 'font-normal'
                             }
                           >
-                            {option.title}
+                            {option}
                           </p>
                           {selected ? (
                             <span

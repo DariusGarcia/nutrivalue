@@ -1,32 +1,34 @@
-import decode from 'jwt-decode'
-
+interface LocalStorage {
+  id: number
+  loggedIn: boolean
+  message: string
+  token: string
+  username: string
+}
 class AuthHandler {
-  // getProfile() {
-  //   return decode(this.getToken())
-  // }
-
   loggedIn() {
-    const token = this.getToken()
-    return token ? true : false
+    const token: any = JSON.parse(localStorage.getItem('user') || '{}')
+    console.log(token?.loggedIn)
+    return token.loggedIn
   }
 
   getToken() {
-    return localStorage.getItem('auth_token')
+    return localStorage.getItem('user')
   }
 
   getUsername() {
-    const localStorageUsername = localStorage.getItem('auth_token') || ''
+    const localStorageUsername = localStorage.getItem('user') || ''
     const username = JSON.parse(localStorageUsername)
     return username
   }
 
   login(user: any) {
-    localStorage.setItem('auth_token', user)
+    localStorage.setItem('user', user)
     window.location.assign('/diary')
   }
 
   logout() {
-    localStorage.removeItem('auth_token')
+    localStorage.removeItem('user')
     window.location.assign('/')
   }
 }

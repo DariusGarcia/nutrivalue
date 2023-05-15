@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import AuthHandler from '@/lib/userAuth'
 import { redirect } from 'next/navigation'
+
+// redirect if user is already logged in
+AuthHandler.loggedIn() && redirect('/diary')
+
 export default function LoginForm() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -30,7 +34,7 @@ export default function LoginForm() {
       .then((user) => user.json())
       .catch((err) => console.log(err))
     console.log(user)
-    if (user.loggedIn) AuthHandler.login(JSON.stringify(user))
+    user.loggedIn && AuthHandler.login(JSON.stringify(user))
   }
 
   return (

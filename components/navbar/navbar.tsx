@@ -16,11 +16,12 @@ import {
   PlayCircleIcon,
   RectangleGroupIcon,
 } from '@heroicons/react/20/solid'
+import ProfileAvatar from './avatar'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const user = AuthHandler.getUsername()
-  console.log(user.username)
+  // const user = AuthHandler.loggedIn() && AuthHandler.getUsername()
+  // console.log(user.username)
   return (
     <header className='relative isolate z-10 bg-white'>
       <nav
@@ -45,7 +46,7 @@ export default function Navbar() {
         <Popover.Group className='hidden lg:flex lg:gap-x-12'>
           <Popover>
             <Popover.Button className='flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900'>
-              Product
+              Diary
               <ChevronDownIcon
                 className='h-5 w-5 flex-none text-gray-400'
                 aria-hidden='true'
@@ -109,18 +110,15 @@ export default function Navbar() {
           </Popover>
 
           <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
-            Features
+            Recipes
           </a>
           <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
             Marketplace
           </a>
-          <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
-            Company
-          </a>
         </Popover.Group>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-          {AuthHandler.loggedIn() ? (
-            user.username
+          {/* {AuthHandler.loggedIn() ? (
+            <ProfileAvatar userProps={user?.username} />
           ) : (
             <Link
               href='/login'
@@ -128,7 +126,7 @@ export default function Navbar() {
             >
               Log in <span aria-hidden='true'>&rarr;</span>
             </Link>
-          )}
+          )} */}
         </div>
       </nav>
       <Dialog
@@ -160,7 +158,7 @@ export default function Navbar() {
                   {({ open }) => (
                     <>
                       <Disclosure.Button className='flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50'>
-                        Product
+                        Diary
                         <ChevronDownIcon
                           className={classNames(
                             open ? 'rotate-180' : '',
@@ -188,7 +186,7 @@ export default function Navbar() {
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
                 >
-                  Features
+                  Rec
                 </a>
                 <a
                   href='#'
@@ -200,12 +198,21 @@ export default function Navbar() {
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
                 >
-                  Company
+                  Profile
                 </a>
               </div>
               <div className='py-6'>
-                {AuthHandler.loggedIn() ? (
-                  user.username
+                {/* {AuthHandler.loggedIn() ? (
+                  <div className='flex flex-col justify-start'>
+                    {' '}
+                    <p className='font-bold'>{user.username}</p>
+                    <button
+                      onClick={() => AuthHandler.logout()}
+                      className='mt-4 p-2 bg-orange-600 rounded-md text-white hover:bg-orange-900'
+                    >
+                      Logout
+                    </button>
+                  </div>
                 ) : (
                   <Link
                     href='/login'
@@ -213,7 +220,7 @@ export default function Navbar() {
                   >
                     Log in
                   </Link>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -225,15 +232,15 @@ export default function Navbar() {
 
 const products = [
   {
-    name: 'Analytics',
+    name: 'Dashboard',
     description: 'Get a better understanding where your traffic is coming from',
-    href: '#',
+    href: '/diary',
     icon: ChartPieIcon,
   },
   {
-    name: 'Engagement',
-    description: 'Speak directly to your customers with our engagement tool',
-    href: '#',
+    name: 'Add meal',
+    description: 'Add a meal to your diary.',
+    href: '/diary/add-to-diary/meal',
     icon: CursorArrowRaysIcon,
   },
   {
