@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import food from '../../public/food.jpg'
-import { useState } from 'react'
 import Image from 'next/image'
+import food from '../../public/food.jpg'
 
 export default function Header() {
   return (
