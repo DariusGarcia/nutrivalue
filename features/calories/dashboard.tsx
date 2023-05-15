@@ -226,7 +226,6 @@ const Dashboard = () => {
                     <div className='py-2 md:p-4 h-full'>
                       <MacroStats />
                       <MealsList />
-                      <MacroStats />
                     </div>
                   </div>
                 </section>
