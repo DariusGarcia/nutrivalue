@@ -1,14 +1,11 @@
 // @ts-nocheck
 'use client'
 import { Fragment } from 'react'
-import { redirect } from 'next/navigation'
-import { Menu, Popover, Transition } from '@headlessui/react'
+import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import MacroStats from './dashboard/macroStats'
 import MealsList from './dashboard/mealsList'
-
-import AuthHandler from '../../lib/userAuth'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -213,7 +210,7 @@ const Dashboard = () => {
         </Popover>
         <main className='-mt-24 pb-8'>
           <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-            <h1 className='sr-only'>Page title</h1>
+            <h1 className='sr-only'>Diary dashboard</h1>
             {/* Main 3 column grid */}
             <div className='grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8'>
               {/* Left column */}

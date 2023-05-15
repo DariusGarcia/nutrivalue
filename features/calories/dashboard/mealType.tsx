@@ -1,5 +1,4 @@
 // @ts-nocheck
-'use client'
 import Link from 'next/link'
 import { useLayoutEffect, useRef, useState } from 'react'
 import capitalize from '@/utils/capitalize'
@@ -13,11 +12,17 @@ function filterCategories(data: any[], type: string) {
   return filteredData
 }
 
-const MealType = ({ userMeals, mealType }: any) => {
+export default function MealType({ userMeals, mealType }: any) {
   const checkbox = useRef(null)
   const [checked, setChecked] = useState(false)
   const [indeterminate, setIndeterminate] = useState(false)
   const [selectedMeals, setSelectedMeals] = useState([])
+
+  let token
+  if (typeof window !== 'undefined') {
+    const user = JSON.parse(localStorage.getItem('user'))
+    token = user ? user.token : null
+  }
 
   useLayoutEffect(() => {
     const isIndeterminate =
@@ -33,15 +38,10 @@ const MealType = ({ userMeals, mealType }: any) => {
     setIndeterminate(false)
   }
 
-  let token
-
-  if (typeof window !== 'undefined') {
-    const user = JSON.parse(localStorage.getItem('user'))
-    token = user ? user.token : null
-  }
-
   async function handleDeleteMeals() {
-    const mealIds = selectedMeals.map((meal) => meal.id)
+    const mealIds = selectedMeals
+      .filter((meal) => meal.category === mealType) // Add category filter
+      .map((meal) => meal.id)
     const response = await fetch('http://localhost:4001/api/meals', {
       method: 'DELETE',
       headers: {
@@ -89,7 +89,7 @@ const MealType = ({ userMeals, mealType }: any) => {
                       onClick={handleDeleteMeals}
                       className='inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white'
                     >
-                      Delete all
+                      Delete
                     </button>
                   </form>
                 )}
@@ -254,5 +254,3 @@ const MealType = ({ userMeals, mealType }: any) => {
     </>
   )
 }
-
-export default MealType
