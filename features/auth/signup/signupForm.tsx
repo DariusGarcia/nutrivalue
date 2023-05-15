@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 
 // redirect if user is already logged in
 // AuthHandler.loggedIn() && redirect('/diary')
-
+const serverURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
 const SignupForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -24,10 +24,9 @@ const SignupForm = () => {
   }
 
   async function loginUser(username: string, password: string) {
-    const baseUrl = process.env.SERVER_BASE_URL
     const headersOptions = { 'Content-Type': 'application/json' }
 
-    const user: any = await fetch(`http://localhost:4001/api/user/signup`, {
+    const user: any = await fetch(`${serverURL}api/user/signup`, {
       method: 'POST',
       headers: headersOptions,
       body: JSON.stringify({ username: username, password: password }),

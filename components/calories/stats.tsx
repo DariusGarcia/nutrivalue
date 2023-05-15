@@ -18,9 +18,9 @@ const NutritionStats = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     token = user ? user.token : null
   }
-
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
   const fetchMeals = async () => {
-    fetch('http://localhost:4001/api/meals', {
+    fetch(`${serverURL}api/meals`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const NutritionStats = () => {
 
   return (
     <div>
-      <h3 className='text-base font-semibold leading-6 text-gray-900'>Today</h3>
+      <h3 className='text-xl font-semibold leading-6 text-white'>Today</h3>
       <dl className='mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0'>
         {stats.map((item) => (
           <div key={item.name} className='px-4 py-5 sm:p-6'>

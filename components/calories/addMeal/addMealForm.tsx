@@ -16,7 +16,7 @@ export default function MealForm() {
   const [meal, setMeal] = useState({
     initialState,
   })
-
+  const backendURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault()
     const { name, value } = e.target
@@ -39,7 +39,7 @@ export default function MealForm() {
     const token = JSON.parse(localStorage.getItem('user'))?.token || '{}'
 
     try {
-      const response = await fetch('http://localhost:4001/api/meals', {
+      const response = await fetch(`${backendURL}api/meals`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

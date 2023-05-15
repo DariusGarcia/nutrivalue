@@ -8,13 +8,14 @@ const MealsList = () => {
 
   // GET user's meals
   let token
-
+  const backendURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
   if (typeof window !== 'undefined') {
     const user = JSON.parse(localStorage.getItem('user'))
     token = user ? user.token : null
   }
+
   const fetchMeals = async () => {
-    fetch('http://localhost:4001/api/meals', {
+    fetch(`${backendURL}api/meals`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

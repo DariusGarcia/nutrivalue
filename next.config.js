@@ -3,6 +3,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+
   reactStrictMode: true,
   headers:
     process.env.NODE_ENV === 'development'
