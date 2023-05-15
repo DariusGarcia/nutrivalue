@@ -4,7 +4,7 @@ export default function StackedCardsLayout({ children }: any) {
       {children?.map((item: any) => (
         <li
           key={item.id}
-          className='overflow-hidden bg-orange-50  py-4 shadow sm:rounded-md '
+          className='overflow-hidden bg-white  py-4 shadow sm:rounded-md '
         >
           {item}
         </li>

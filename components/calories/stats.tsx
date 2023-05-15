@@ -1,36 +1,72 @@
 // @ts-nocheck
-import React from 'react'
+'use client'
+import { useEffect, useState } from 'react'
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
-
-const stats = [
-  {
-    name: 'Total Calories',
-    stat: '2500',
-    previousStat: '2000',
-    change: '25%',
-    changeType: 'increase',
-  },
-  {
-    name: 'Avg. Open Rate',
-    stat: '58.16%',
-    previousStat: '56.14%',
-    change: '2.02%',
-    changeType: 'increase',
-  },
-  {
-    name: 'Avg. Click Rate',
-    stat: '24.57%',
-    previousStat: '28.62%',
-    change: '4.05%',
-    changeType: 'decrease',
-  },
-]
+import calculateTotalNutritionalValue from '../../utils/calories/totalNutritionalValue'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Stats() {
+const NutritionStats = () => {
+  const [userMeals, setUserMeals] = useState([])
+
+  // GET user's meals
+  let token
+
+  if (typeof window !== 'undefined') {
+    const user = JSON.parse(localStorage.getItem('user'))
+    token = user ? user.token : null
+  }
+
+  const fetchMeals = async () => {
+    fetch('http://localhost:4001/api/meals', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setUserMeals(data))
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    fetchMeals()
+  }, [])
+
+  const totalNutritionalValue = {
+    calories: calculateTotalNutritionalValue(userMeals, 'calories'),
+    protein: calculateTotalNutritionalValue(userMeals, 'protein'),
+    carbs: calculateTotalNutritionalValue(userMeals, 'carbs'),
+    fats: calculateTotalNutritionalValue(userMeals, 'fats'),
+  }
+
+  const stats = [
+    {
+      name: 'Total Calories',
+      stat: totalNutritionalValue.calories + 'cal',
+      previousStat: '1002cal',
+      change: '25%',
+      changeType: 'increase',
+    },
+    {
+      name: 'Total Protein',
+      stat: totalNutritionalValue.protein + 'g',
+      previousStat: '120g',
+      change: '2.02%',
+      changeType: 'increase',
+    },
+    {
+      name: 'Total Carbs',
+      stat: totalNutritionalValue.carbs + 'g',
+      previousStat: '324g',
+      change: '4.05%',
+      changeType: 'decrease',
+    },
+  ]
+
   return (
     <div>
       <h3 className='text-base font-semibold leading-6 text-gray-900'>Today</h3>
@@ -82,3 +118,5 @@ export default function Stats() {
     </div>
   )
 }
+
+export default NutritionStats
