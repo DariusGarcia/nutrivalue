@@ -62,7 +62,7 @@ export default function MealType({ userMeals, mealType }: any) {
 
   return (
     <>
-      <div className='px-4'>
+      <div className='px-4 '>
         <div className='sm:flex sm:items-center'>
           <div className='sm:flex-auto'>
             <h1 className='text-base font-semibold leading-6 text-gray-900'>

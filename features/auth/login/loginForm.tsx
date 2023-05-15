@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import AuthHandler from '@/lib/userAuth'
 import { redirect } from 'next/navigation'
+import SuccessNotification from '@/components/notications/success'
+import ErrorNotification from '@/components/notications/error'
 
 // redirect if user is already logged in
 // AuthHandler.loggedIn() && redirect('/diary')
@@ -10,6 +12,8 @@ const serverURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,13 +38,34 @@ const LoginForm = () => {
     })
       .then((user) => user.json())
       .catch((err) => console.log(err))
-    console.log(user)
-    user.loggedIn && AuthHandler.login(JSON.stringify(user))
+
+    if (user.loggedIn) {
+      setSuccess(true)
+      setTimeout(() => {
+        if (user.loggedIn) {
+          AuthHandler.login(JSON.stringify(user))
+        }
+      }, 1200)
+    } else {
+      setError(user.message)
+      setTimeout(() => {
+        setError('')
+      }, 2000)
+    }
   }
 
   return (
     <>
       <div className='flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 '>
+        {success && (
+          <SuccessNotification
+            message1={'Successfully logged in!'}
+            message2={'redirecting to home'}
+          />
+        )}
+        {error && (
+          <ErrorNotification message1={error} message2='' status='error' />
+        )}
         <div className='sm:mx-auto '>
           <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
             Sign in to your account
