@@ -20,7 +20,7 @@ import ProfileAvatar from './avatar'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const user = AuthHandler.loggedIn() && AuthHandler.getUsername()
+  // const user = AuthHandler.loggedIn() && AuthHandler.getUsername()
   // console.log(user.username)
   return (
     <header className='relative isolate z-10 bg-white'>
@@ -117,7 +117,7 @@ export default function Navbar() {
           </a>
         </Popover.Group>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-          {AuthHandler.loggedIn() ? (
+          {/* {AuthHandler.loggedIn() ? (
             <ProfileAvatar userProps={user?.username} />
           ) : (
             <Link
@@ -126,7 +126,7 @@ export default function Navbar() {
             >
               Log in <span aria-hidden='true'>&rarr;</span>
             </Link>
-          )}
+          )} */}
         </div>
       </nav>
       <Dialog
@@ -202,7 +202,7 @@ export default function Navbar() {
                 </a>
               </div>
               <div className='py-6'>
-                {AuthHandler.loggedIn() ? (
+                {/* {AuthHandler.loggedIn() ? (
                   <div className='flex flex-col justify-start'>
                     {' '}
                     <p className='font-bold'>{user.username}</p>
@@ -220,7 +220,7 @@ export default function Navbar() {
                   >
                     Log in
                   </Link>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -240,7 +240,7 @@ const products = [
   {
     name: 'Add meal',
     description: 'Add a meal to your diary.',
-    href: '/add-to-diary/breakfast',
+    href: '/diary/add-to-diary/meal',
     icon: CursorArrowRaysIcon,
   },
   {

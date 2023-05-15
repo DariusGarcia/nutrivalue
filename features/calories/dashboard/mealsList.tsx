@@ -111,7 +111,7 @@ const meals = [
   {
     id: 1,
     name: 'Breakfast',
-    href: '/add-to-diary/breakfast',
+    href: '/diary/add-to-diary/breakfast',
     status: 'Complete',
     createdBy: 'Leslie Alexander',
     dueDate: 'March 17, 2023',
@@ -120,7 +120,7 @@ const meals = [
   {
     id: 2,
     name: 'Lunch',
-    href: '/add-to-diary/lunch',
+    href: '/diary/add-to-diary/lunch',
     status: 'In progress',
     createdBy: 'Leslie Alexander',
     dueDate: 'May 5, 2023',
@@ -129,7 +129,7 @@ const meals = [
   {
     id: 3,
     name: 'Dinner',
-    href: '/add-to-diary/dinner',
+    href: '/diary/add-to-diary/dinner',
     status: 'In progress',
     createdBy: 'Courtney Henry',
     dueDate: 'May 25, 2023',
@@ -138,7 +138,7 @@ const meals = [
   {
     id: 4,
     name: 'Snacks',
-    href: '/add-to-diary/snacks',
+    href: '/diary/add-to-diary/snacks',
     status: 'In progress',
     createdBy: 'Leonard Krasner',
     dueDate: 'June 7, 2023',
