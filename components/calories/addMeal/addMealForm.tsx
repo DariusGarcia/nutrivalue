@@ -153,14 +153,14 @@ export default function MealForm() {
             </div>
           </div>
           <div className='flex flex-row justify-center mt-8 gap-4'>
-            <button className='border-2 border-orange-600 p-2 rounded-md w-36'>
+            <button className='border-2 border-orange-600 hover:bg-orange-500 transition ease-in-out hover:text-white p-2 rounded-md w-36'>
               Cancel
             </button>
             <button
               className={
                 meal.category === 'Select the type of meal'
                   ? 'bg-orange-900 text-white p-2 rounded-md w-36'
-                  : 'bg-orange-600 text-white p-2 rounded-md w-36'
+                  : 'bg-orange-600 text-white p-2 rounded-md w-36 hover:bg-orange-500'
               }
               disabled={
                 meal.category === 'Select the type of meal' ? true : false
