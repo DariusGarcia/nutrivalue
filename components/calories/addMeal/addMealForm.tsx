@@ -5,13 +5,16 @@ import { useState } from 'react'
 import Stats from '@/components/calories/stats'
 
 export default function MealForm() {
-  const [meal, setMeal] = useState({
-    category: '',
+  const initialState = {
+    category: 'Select the type of meal',
     mealName: '',
     calories: 0,
     protein: 0,
     carbs: 0,
     fats: 0,
+  }
+  const [meal, setMeal] = useState({
+    initialState,
   })
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -52,10 +55,9 @@ export default function MealForm() {
         }),
       })
 
-      // Handle the response as needed
-      // For example, check the response status and display a success message
       if (response.ok) {
         console.log('Meal added successfully')
+        setMeal(initialState)
       } else {
         console.log('Failed to add meal')
       }

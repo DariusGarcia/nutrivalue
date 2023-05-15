@@ -1,104 +1,42 @@
 // @ts-nocheck
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import Link from 'next/link'
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
+import { link } from 'fs'
+import MealType from './mealType'
+import StackedCardsLayout from '@/components/layouts/stackedCards'
 
 export default function MealsList() {
+  const [userMeals, setUserMeals] = useState([])
+  // GET user's meals
+  const token = JSON.parse(localStorage.getItem('user')).token
+  const fetchMeals = async () => {
+    fetch('http://localhost:4001/api/meals', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setUserMeals(data))
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    fetchMeals()
+  }, [])
+
   return (
-    <ul role='list' className='divide-y divide-gray-100'>
-      {meals.map((meal) => (
-        <li
-          key={meal.id}
-          className='flex items-center justify-between gap-x-6 py-5'
-        >
-          <div className='min-w-0'>
-            <div className='flex items-start gap-x-3'>
-              <p className='text-sm font-semibold leading-6 text-gray-900'>
-                {meal.name}
-              </p>
-              <p
-                className={classNames(
-                  statuses[meal.status],
-                  'rounded-md whitespace-nowrap mt-0.5 px-2 py-0.5 text-xs font-medium ring-1 ring-inset'
-                )}
-              >
-                {meal.status}
-              </p>
-            </div>
-          </div>
-          <div className='flex flex-none items-center gap-x-4'>
-            <Link
-              href={meal.href}
-              className='hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block'
-            >
-              Add Food<span className='sr-only'>, {meal.name}</span>
-            </Link>
-            <Menu as='div' className='relative flex-none'>
-              <Menu.Button className='-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900'>
-                <span className='sr-only'>Open options</span>
-                <EllipsisVerticalIcon className='h-5 w-5' aria-hidden='true' />
-              </Menu.Button>
-              <Transition
-                as={Fragment}
-                enter='transition ease-out duration-100'
-                enterFrom='transform opacity-0 scale-95'
-                enterTo='transform opacity-100 scale-100'
-                leave='transition ease-in duration-75'
-                leaveFrom='transform opacity-100 scale-100'
-                leaveTo='transform opacity-0 scale-95'
-              >
-                <Menu.Items className='absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none'>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href='#'
-                        className={classNames(
-                          active ? 'bg-gray-50' : '',
-                          'block px-3 py-1 text-sm leading-6 text-gray-900'
-                        )}
-                      >
-                        Edit<span className='sr-only'>, {meal.name}</span>
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href='#'
-                        className={classNames(
-                          active ? 'bg-gray-50' : '',
-                          'block px-3 py-1 text-sm leading-6 text-gray-900'
-                        )}
-                      >
-                        Move<span className='sr-only'>, {meal.name}</span>
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href='#'
-                        className={classNames(
-                          active ? 'bg-gray-50' : '',
-                          'block px-3 py-1 text-sm leading-6 text-gray-900'
-                        )}
-                      >
-                        Delete<span className='sr-only'>, {meal.name}</span>
-                      </a>
-                    )}
-                  </Menu.Item>
-                </Menu.Items>
-              </Transition>
-            </Menu>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <>
+      <StackedCardsLayout>
+        <MealType userMeals={userMeals} mealType={'breakfast'} />
+        <MealType userMeals={userMeals} mealType={'lunch'} />
+        <MealType userMeals={userMeals} mealType={'dinner'} />
+        <MealType userMeals={userMeals} mealType={'snack'} />
+      </StackedCardsLayout>
+    </>
   )
 }
 
