@@ -19,8 +19,15 @@ export default function calculateTotalNutritionalValue(
 ): number {
   let totalValue = 0
 
-  for (const meal of meals) {
-    totalValue += meal[nutritionalValue]
+  if (meals && meals.length !== 0) {
+    for (const meal of meals) {
+      totalValue += meal[nutritionalValue]
+    }
+  } else {
+    const defaultMeal = {
+      [nutritionalValue]: 0,
+    }
+    totalValue += defaultMeal[nutritionalValue]
   }
 
   return totalValue
