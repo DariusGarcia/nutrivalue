@@ -1,5 +1,5 @@
-import Stats from '@/components/calories/stats'
+import NutritionStats from '@/components/calories/stats'
 
 export default function MacroStats() {
-  return <Stats />
+  return <NutritionStats />
 }
