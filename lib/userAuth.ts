@@ -7,13 +7,15 @@ interface LocalStorage {
 }
 class AuthHandler {
   loggedIn() {
-    const token: any = JSON.parse(localStorage.getItem('user') || '{}')
-    console.log(token?.loggedIn)
-    return token.loggedIn
+    const userString: string | null = localStorage.getItem('user')
+    const user = userString ? JSON.parse(userString) : {} // check if userString is truthy before parsing
+    console.log({ user: user })
+    return user?.loggedIn || false // return false if loggedIn property is not present
   }
 
   getToken() {
-    return localStorage.getItem('user')
+    const token: LocalStorage = JSON.parse(localStorage.getItem('user') || '{}')
+    return token.token
   }
 
   getUsername() {
