@@ -4,6 +4,7 @@ import AuthHandler from '@/lib/userAuth'
 import { redirect } from 'next/navigation'
 import SuccessNotification from '@/components/notications/success'
 import ErrorNotification from '@/components/notications/error'
+import Link from 'next/link'
 
 // redirect if user is already logged in
 // AuthHandler.loggedIn() && redirect('/diary')
@@ -56,7 +57,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className='flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 '>
+      <div className='flex min-h-full flex-col justify-center py-8 sm:px-6 lg:px-8 w-full md:max-w-3xl '>
         {success && (
           <SuccessNotification
             message1={'Successfully logged in!'}
@@ -74,7 +75,7 @@ const LoginForm = () => {
         <div className='w-full'>
           <div className='mt-8 '>
             <div className='bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10 '>
-              <form className='space-y-6' onSubmit={handleSubmit}>
+              <form className='space-y-6 ' onSubmit={handleSubmit}>
                 <div>
                   <label
                     htmlFor='username'
@@ -146,10 +147,19 @@ const LoginForm = () => {
                 <div>
                   <button
                     type='submit'
-                    className='flex w-full justify-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
+                    className='flex w-full justify-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition ease-in-out hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
                   >
                     Sign in
                   </button>
+                </div>
+                <div className='flex flex-col gap-2'>
+                  <p className='text-sm'>Don't have an account yet?</p>
+                  <Link
+                    href='/signup'
+                    className='flex w-56 justify-center rounded-md border border-orange-600 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-orange-500 hover:text-white transition ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
+                  >
+                    Create account
+                  </Link>
                 </div>
               </form>
             </div>

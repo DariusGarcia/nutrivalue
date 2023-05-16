@@ -4,6 +4,7 @@ import AuthHandler from '@/lib/userAuth'
 import { redirect } from 'next/navigation'
 import ErrorNotification from '@/components/notications/error'
 import SuccessNotification from '@/components/notications/success'
+import Link from 'next/link'
 
 // redirect if user is already logged in
 // AuthHandler.loggedIn() && redirect('/diary')
@@ -55,7 +56,7 @@ const SignupForm = () => {
 
   return (
     <>
-      <div className='flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 '>
+      <div className='flex min-h-full flex-col justify-center py-8 sm:px-6 lg:px-8 w-full md:max-w-3xl '>
         {success && (
           <SuccessNotification
             message1={'Successfully created an account!'}
@@ -149,6 +150,15 @@ const SignupForm = () => {
                   >
                     Sign Up
                   </button>
+                </div>
+                <div className='flex flex-col gap-2'>
+                  <p className='text-sm'>Already have an account?</p>
+                  <Link
+                    href='/login'
+                    className='flex w-56 justify-center rounded-md border border-orange-600 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-orange-500 hover:text-white transition ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600'
+                  >
+                    Login
+                  </Link>
                 </div>
               </form>
             </div>
