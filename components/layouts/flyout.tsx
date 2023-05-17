@@ -49,7 +49,6 @@ const FlyOut = () => {
       body: JSON.stringify({
         ingr: addHyphen(foodSearch),
         nutritionType: 'cooking',
-        category: categorySelection,
       }),
     })
     const data = await response.json()
@@ -181,6 +180,7 @@ const FlyOut = () => {
                           {searchedFoodData.length != 0 && (
                             <SearchResultCard
                               searchedFoodData={searchedFoodData}
+                              category={categorySelection}
                             />
                           )}
                         </div>

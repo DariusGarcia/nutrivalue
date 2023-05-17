@@ -5,12 +5,13 @@ import StackedList from '@/components/layouts/stackedList'
 import ErrorNotification from '@/components/notications/error'
 import SuccessNotification from '@/components/notications/success'
 
-const SearchResultCard = ({ searchedFoodData }: any) => {
+const SearchResultCard = ({ searchedFoodData, category }: any) => {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
 
   async function handleSaveRecipe(e: any) {
     e.preventDefault()
+    handleSaveMeal(e)
     const token = JSON.parse(localStorage.getItem('user'))?.token || '{}'
     const backendURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
 
@@ -23,7 +24,6 @@ const SearchResultCard = ({ searchedFoodData }: any) => {
       body: JSON.stringify({
         image: searchedFoodData?.parsed[0].food?.image,
         label: searchedFoodData?.parsed[0].food?.label,
-        category: searchedFoodData?.parsed[0].food?.category,
         protein: searchedFoodData?.parsed[0].food?.nutrients.PROCNT,
         carbs: searchedFoodData?.parsed[0].food?.nutrients.CHOCDF,
         fats: searchedFoodData?.parsed[0].food?.nutrients.FAT,
@@ -37,6 +37,7 @@ const SearchResultCard = ({ searchedFoodData }: any) => {
       setSuccess(true)
       setTimeout(() => {
         setSuccess(false)
+        window.location.assign('/diary')
       }, 1500)
     } else {
       setError("Couldn't save recipe. Please try again.")
@@ -45,6 +46,39 @@ const SearchResultCard = ({ searchedFoodData }: any) => {
       }, 2000)
     }
     return response
+  }
+
+  async function handleSaveMeal(e: any) {
+    e.preventDefault()
+    const token = JSON.parse(localStorage.getItem('user'))?.token || '{}'
+    const backendURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
+    try {
+      const response = await fetch(`${backendURL}api/meals`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: token,
+        },
+        body: JSON.stringify({
+          category: category,
+          mealName: searchedFoodData?.parsed[0].food?.label,
+          calories: searchedFoodData?.parsed[0].food?.nutrients.ENERC_KCAL,
+          protein: searchedFoodData?.parsed[0].food?.nutrients.PROCNT,
+          carbs: searchedFoodData?.parsed[0].food?.nutrients.CHOCDF,
+          fats: searchedFoodData?.parsed[0].food?.nutrients.FAT,
+        }),
+      })
+
+      if (response.ok) {
+        console.log('Meal added successfully')
+        setMeal(initialState)
+        setSuccess(true)
+      } else {
+        console.log('Failed to add meal')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   return (
@@ -71,10 +105,10 @@ const SearchResultCard = ({ searchedFoodData }: any) => {
           <form className='mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 sm:pb-16 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:pt-8'>
             <div className='lg:col-start-2'>
               <div className='flex flex-row justify-between items-start'>
-                <h2 id='features-heading' className='font-medium text-gray-500'>
-                  {searchedFoodData &&
-                    searchedFoodData?.parsed[0].food?.category}
-                </h2>
+                <h2
+                  id='features-heading'
+                  className='font-medium text-gray-500'
+                ></h2>
                 <button
                   onClick={handleSaveRecipe}
                   className='p-2 rounded-md bg-orange-600 text-white w-24 hover:bg-orange-500'

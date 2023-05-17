@@ -59,8 +59,8 @@ const RadioGroup = ({ category }: any) => {
 export default RadioGroup
 
 const categories = [
-  { id: 'Generic foods', title: 'generic-foods' },
-  { id: 'Generic meals', title: 'generic-meals' },
-  { id: 'Fast food', title: 'fast-food' },
-  { id: 'Packaged foods', title: 'packaged-foods' },
+  { id: 'Breakfast', title: 'Breakfast' },
+  { id: 'Lunch', title: 'Lunch' },
+  { id: 'Dinner', title: 'Dinner' },
+  { id: 'Snack', title: 'Snack' },
 ]
