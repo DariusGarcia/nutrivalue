@@ -1,3 +1,4 @@
+'use client'
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
 import AuthHandler from '../../lib/userAuth'
@@ -7,6 +8,7 @@ import {
   ChartPieIcon,
   CursorArrowRaysIcon,
   FingerPrintIcon,
+  HomeIcon,
   SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
@@ -18,10 +20,10 @@ import {
 } from '@heroicons/react/20/solid'
 import ProfileAvatar from './avatar'
 
-export default function Navbar() {
+const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   // const user = AuthHandler.loggedIn() && AuthHandler.getUsername()
-  // console.log(user.username)
+
   return (
     <header className='relative isolate z-10 bg-white'>
       <nav
@@ -43,7 +45,14 @@ export default function Navbar() {
             <Bars3Icon className='h-6 w-6' aria-hidden='true' />
           </button>
         </div>
+
         <Popover.Group className='hidden lg:flex lg:gap-x-12'>
+          <Link
+            href='/'
+            className='text-sm font-semibold leading-6 text-gray-900'
+          >
+            Home
+          </Link>
           <Popover>
             <Popover.Button className='flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900'>
               Diary
@@ -71,17 +80,17 @@ export default function Navbar() {
                     >
                       <div className='flex h-11 w-11 items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white'>
                         <item.icon
-                          className='h-6 w-6 text-gray-600 group-hover:text-indigo-600'
+                          className='h-6 w-6 text-gray-600 group-hover:text-orange-600'
                           aria-hidden='true'
                         />
                       </div>
-                      <a
+                      <Link
                         href={item.href}
                         className='mt-6 block font-semibold text-gray-900'
                       >
                         {item.name}
                         <span className='absolute inset-0' />
-                      </a>
+                      </Link>
                       <p className='mt-1 text-gray-600'>{item.description}</p>
                     </div>
                   ))}
@@ -90,7 +99,7 @@ export default function Navbar() {
                   <div className='mx-auto max-w-7xl px-6 lg:px-8'>
                     <div className='grid grid-cols-3 divide-x divide-gray-900/5 border-x border-gray-900/5'>
                       {callsToAction.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
                           href={item.href}
                           className='flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100'
@@ -100,7 +109,7 @@ export default function Navbar() {
                             aria-hidden='true'
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -182,24 +191,24 @@ export default function Navbar() {
                     </>
                   )}
                 </Disclosure>
-                <a
+                <Link
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
                 >
-                  Rec
-                </a>
-                <a
+                  Recipes
+                </Link>
+                <Link
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
                 >
                   Marketplace
-                </a>
-                <a
+                </Link>
+                <Link
                   href='#'
                   className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
                 >
                   Profile
-                </a>
+                </Link>
               </div>
               <div className='py-6'>
                 {/* {AuthHandler.loggedIn() ? (
@@ -243,25 +252,15 @@ const products = [
     href: '/diary/add-to-diary/meal',
     icon: CursorArrowRaysIcon,
   },
-  {
-    name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
-    href: '#',
-    icon: FingerPrintIcon,
-  },
-  {
-    name: 'Integrations',
-    description: 'Your customers’ data will be safe and secure',
-    href: '#',
-    icon: SquaresPlusIcon,
-  },
 ]
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+  { name: 'Contact', href: '#', icon: PhoneIcon },
   { name: 'View all products', href: '#', icon: RectangleGroupIcon },
 ]
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ')
 }
+
+export default Navbar
