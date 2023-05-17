@@ -56,8 +56,6 @@ const FlyOut = () => {
     return data
   }
 
-  console.log(searchedFoodData)
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as='div' className='relative z-10 ' onClose={setOpen}>
