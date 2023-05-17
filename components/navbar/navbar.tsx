@@ -22,8 +22,8 @@ import ProfileAvatar from './avatar'
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const user = AuthHandler.loggedIn() && AuthHandler.getUsername()
-  console.log(user.username)
+  // const user = AuthHandler.loggedIn() && AuthHandler.getUsername()
+
   return (
     <header className='relative isolate z-10 bg-white'>
       <nav
@@ -126,7 +126,7 @@ const Navbar = () => {
           </a>
         </Popover.Group>
         <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-          {AuthHandler.loggedIn() ? (
+          {/* {AuthHandler.loggedIn() ? (
             <ProfileAvatar userProps={user?.username} />
           ) : (
             <Link
@@ -135,7 +135,7 @@ const Navbar = () => {
             >
               Log in <span aria-hidden='true'>&rarr;</span>
             </Link>
-          )}
+          )} */}
         </div>
       </nav>
       <Dialog
@@ -211,7 +211,7 @@ const Navbar = () => {
                 </Link>
               </div>
               <div className='py-6'>
-                {AuthHandler.loggedIn() ? (
+                {/* {AuthHandler.loggedIn() ? (
                   <div className='flex flex-col justify-start'>
                     {' '}
                     <p className='font-bold'>{user.username}</p>
@@ -229,7 +229,7 @@ const Navbar = () => {
                   >
                     Log in
                   </Link>
-                )}
+                )} */}
               </div>
             </div>
           </div>

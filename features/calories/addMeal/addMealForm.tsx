@@ -74,7 +74,10 @@ const MealForm = () => {
   return (
     <>
       <FlyOut />
-      <div className='mx-auto max-w-3xl mt-4 lg:mt-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+      <div
+        key={1}
+        className='mx-auto max-w-3xl mt-4 lg:mt-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8'
+      >
         <Breadcrumbs
           urls={[
             { name: 'Diary', href: '/diary' },

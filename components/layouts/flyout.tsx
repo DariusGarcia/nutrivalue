@@ -4,24 +4,36 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import RadioGroup from '../layouts/radioGroup'
 import addHyphen from '@/utils/addHyphen'
+import SearchResultCard from '@/features/food/searchResultCard'
+import ErrorNotification from '../notications/error'
+import ErrorAlert from '../alerts/errorAlert'
 
 const FlyOut = () => {
   const [open, setOpen] = useState(true)
   const [foodSearch, setFoodSearch] = useState('')
   const [categorySelection, setCategorySelection] = useState('')
+  const [searchedFoodData, setSearchedFoodData] = useState([])
+  const [searchError, setSearchError] = useState(false)
 
   const handleDataFromChild = (data: any) => {
     setCategorySelection(data)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const food = addHyphen(e.target.value)
+    const food = e.target.value
     setFoodSearch(food)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    fetchFoodAPI()
+    const searchResults = await fetchFoodAPI()
+    if (searchResults.parsed.length === 0) {
+      setSearchError(!searchError)
+      return
+    } else {
+      setSearchedFoodData(searchResults)
+      setSearchError(false)
+    }
   }
 
   async function fetchFoodAPI() {
@@ -41,12 +53,14 @@ const FlyOut = () => {
       }),
     })
     const data = await response.json()
-    console.log({ 'searched food': data })
+    return data
   }
+
+  console.log(searchedFoodData)
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={setOpen}>
+      <Dialog as='div' className='relative z-10 ' onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter='ease-in-out duration-500'
@@ -59,9 +73,9 @@ const FlyOut = () => {
           <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
         </Transition.Child>
 
-        <div className='fixed inset-0 overflow-hidden'>
+        <div className='fixed inset-0 overflow-hidden '>
           <div className='absolute inset-0 overflow-hidden'>
-            <div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10'>
+            <div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 '>
               <Transition.Child
                 as={Fragment}
                 enter='transform transition ease-in-out duration-500 sm:duration-700'
@@ -92,16 +106,12 @@ const FlyOut = () => {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className='flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl'>
-                    <div className='px-4 sm:px-6'>
-                      <Dialog.Title className='text-base font-semibold leading-6 text-gray-900'>
-                        Panel title
-                      </Dialog.Title>
-                    </div>
-                    <div className='relative mt-6 flex-1 px-4 sm:px-6'>
+                  <div className='flex h-full flex-col overflow-y-scroll bg-white py-6  shadow-xl'>
+                    <div className='px-4 sm:px-6'></div>
+                    <div className='relative flex-1 px-4 sm:px-6'>
                       <form className='flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl'>
                         <div className='h-0 flex-1 overflow-y-auto'>
-                          <div className='bg-orange-700 px-4 py-6 sm:px-6'>
+                          <div className='bg-orange-700 px-4 py-6 sm:px-6 rounded-md'>
                             <div className='flex items-center justify-between'>
                               <Dialog.Title className='text-base font-semibold leading-6 text-white'>
                                 Search for a recipe
@@ -129,7 +139,7 @@ const FlyOut = () => {
                           </div>
                           <div className='flex flex-1 flex-col justify-between'>
                             <div className='divide-y divide-gray-200 px-4 sm:px-6'>
-                              <div className='space-y-6 pb-5 pt-6'>
+                              <div className='space-y-6 pb-5 pt-6 flex flex-col w-full items-start'>
                                 <div>
                                   <label
                                     htmlFor='project-name'
@@ -151,13 +161,30 @@ const FlyOut = () => {
                                 <RadioGroup category={handleDataFromChild} />
                                 <button
                                   onClick={handleSubmit}
-                                  className='w-24 bg-orange-600 hover:bg-orange-500 text-white p-2 rounded-md'
+                                  disabled={
+                                    categorySelection === '' ? true : false
+                                  }
+                                  className={
+                                    categorySelection === ''
+                                      ? 'w-24 bg-orange-900  text-white p-2 rounded-md'
+                                      : 'w-24 bg-orange-600 hover:bg-orange-500 text-white p-2 rounded-md'
+                                  }
                                 >
                                   Search
                                 </button>
+                                <div className='justify-start w-full'>
+                                  {searchError && (
+                                    <ErrorAlert message='No food results found! Please refine search and try again.' />
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
+                          {searchedFoodData.length != 0 && (
+                            <SearchResultCard
+                              searchedFoodData={searchedFoodData}
+                            />
+                          )}
                         </div>
                         <div className='flex flex-shrink-0 justify-end px-4 py-4'>
                           <button
