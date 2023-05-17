@@ -1,12 +1,5 @@
 import { useState } from 'react'
 
-const categories = [
-  { id: 'Generic foods', title: 'generic-foods' },
-  { id: 'Generic meals', title: 'generic-meals' },
-  { id: 'Fast food', title: 'fast-food' },
-  { id: 'Packaged foods', title: 'packaged-foods' },
-]
-
 const RadioGroup = ({ category }: any) => {
   const [selection, setSelection] = useState('')
 
@@ -52,7 +45,7 @@ const RadioGroup = ({ category }: any) => {
             ))}
             <button
               onClick={handleClick}
-              className='bg-orange-600 p-2 rounded-md text-white text-xs md:mt-2 md:ml-4'
+              className='bg-orange-600 p-2 w-24 rounded-md mt-2  text-center text-white text-xs md:ml-4'
             >
               Save category
             </button>
@@ -64,3 +57,10 @@ const RadioGroup = ({ category }: any) => {
 }
 
 export default RadioGroup
+
+const categories = [
+  { id: 'Generic foods', title: 'generic-foods' },
+  { id: 'Generic meals', title: 'generic-meals' },
+  { id: 'Fast food', title: 'fast-food' },
+  { id: 'Packaged foods', title: 'packaged-foods' },
+]
