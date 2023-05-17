@@ -1,14 +1,20 @@
 // @ts-nocheck
+import { useState } from 'react'
 import Pagination from '@/components/layouts/pagination'
 import StackedList from '@/components/layouts/stackedList'
+import ErrorNotification from '@/components/notications/error'
+import SuccessNotification from '@/components/notications/success'
 
 const SearchResultCard = ({ searchedFoodData }: any) => {
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
   async function handleSaveRecipe(e: any) {
     e.preventDefault()
     const token = JSON.parse(localStorage.getItem('user'))?.token || '{}'
     const backendURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL
 
-    const response = await fetch(`${backendURL}api/recipes`, {
+    const response: any = await fetch(`${backendURL}api/recipes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,13 +30,35 @@ const SearchResultCard = ({ searchedFoodData }: any) => {
         calories: searchedFoodData?.parsed[0].food?.nutrients.ENERC_KCAL,
       }),
     })
-    const data = await response.json()
-    return data
+      .then((recipe) => recipe.json())
+      .catch((err) => console.log(err))
+
+    if (response.success) {
+      setSuccess(true)
+      setTimeout(() => {
+        setSuccess(false)
+      }, 1500)
+    } else {
+      setError("Couldn't save recipe. Please try again.")
+      setTimeout(() => {
+        setError('')
+      }, 2000)
+    }
+    return response
   }
 
   return (
     searchedFoodData.parsed && (
       <div className='bg-white mx-2 md:mx-6'>
+        {success && (
+          <SuccessNotification
+            message1={'Successfully added recipe!'}
+            message2={''}
+          />
+        )}
+        {error && (
+          <ErrorNotification message1={error} message2='' status='error' />
+        )}
         <section aria-labelledby='features-heading' className='relative'>
           <div className=' overflow-hidden  lg:absolute  lg:pr-4 xl:pr-16 mt-8'>
             <img
